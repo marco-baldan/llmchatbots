@@ -2,7 +2,7 @@ import openai
 import streamlit as st
 
 with st.sidebar:
-    openai_model=st.radio('Pick your open ai model',("gpt-3.5-turbo","gpt-4"))
+    openai_model=st.radio('Pick your open ai model',("gpt-3.5-turbo","gpt-4", "gpt-4-1106-preview"))
     openai_api_key = st.text_input("OpenAI API Key", key="chatbot_api_key", type="password")
     "[Get an OpenAI API key](https://platform.openai.com/account/api-keys)"
 
