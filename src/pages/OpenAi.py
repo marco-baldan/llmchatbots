@@ -1,14 +1,11 @@
-from openai import OpenAI 
+import openai
 import streamlit as st
-
 
 with st.sidebar:
     openai_model=st.radio('Pick your open ai model',("gpt-3.5-turbo","gpt-4", "gpt-4-1106-preview"))
     openai_api_key = st.text_input("OpenAI API Key", key="chatbot_api_key", type="password")
     "[Get an OpenAI API key](https://platform.openai.com/account/api-keys)"
-client = OpenAI(
-    api_key = openai_api_key
-)
+
 st.markdown('''
 [![Account](https://badgen.net/badge/icon/GitHub?icon=github&label)](https://github.com/marco-baldan)
 ''', unsafe_allow_html=True)
@@ -26,10 +23,10 @@ if prompt := st.chat_input():
         st.info("Please add your OpenAI API key to continue.")
         st.stop()
 
-
+    openai.api_key = openai_api_key
     st.session_state.messages.append({"role": "user", "content": prompt})
     st.chat_message("user").write(prompt)
-    response = client.chat.completions.create(model=openai_model, messages=st.session_state.messages)
+    response = openai.ChatCompletion.create(model=openai_model, messages=st.session_state.messages)
     msg = response.choices[0].message
     st.session_state.messages.append(msg)
     st.chat_message("assistant").write(msg.content)
